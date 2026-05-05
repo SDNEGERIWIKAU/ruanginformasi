@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Karya SDN Wikau</title>
-    <!-- Menggunakan Tailwind CSS untuk desain yang modern dan responsif -->
+    <title>Portal Karya SD NEGERI WIKAU</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome untuk ikon-ikon menarik -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -16,29 +14,29 @@
         .bg-navy { background-color: var(--navy-primary); }
         .text-navy { color: var(--navy-primary); }
         .bg-green-custom { background-color: var(--green-merawat); }
-        .border-green-custom { border-color: var(--green-merawat); }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             scroll-behavior: smooth;
         }
-        /* Efek visual pada bagian atas website */
         .hero-gradient {
             background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(22, 101, 52, 0.85)), url('https://images.unsplash.com/photo-1497633332323-4b0bc443e0f7?auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
         }
-        /* Efek saat mouse mengarah ke kartu karya */
-        .card-hover:hover {
-            transform: translateY(-5px);
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1e3a8a;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
         }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-    <!-- Menu Navigasi Atas -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
@@ -50,134 +48,159 @@
                 </div>
                 <div class="hidden md:flex space-x-8 font-medium">
                     <a href="#beranda" class="text-navy hover:text-green-700">Beranda</a>
-                    <a href="#karya-siswa" class="hover:text-navy">Karya Siswa</a>
-                    <a href="#karya-guru" class="hover:text-navy">Karya Guru</a>
-                    <a href="#warta" class="hover:text-navy">Warta</a>
+                    <a href="#galeri" class="hover:text-navy">Galeri Karya</a>
+                    <a href="#input-karya" class="bg-green-custom text-white px-4 py-2 rounded-lg hover:bg-green-800 transition">Tambah Karya</a>
                 </div>
-                <button class="md:hidden text-navy text-2xl" onclick="alert('Menu dibuka!')">
-                    <i class="fas fa-bars"></i>
-                </button>
             </div>
         </div>
     </nav>
 
-    <!-- Bagian Utama (Hero) -->
-    <header id="beranda" class="hero-gradient text-white py-24 px-4 text-center">
+    <!-- Header Terupdate -->
+    <header id="beranda" class="hero-gradient text-white py-20 px-4 text-center shadow-inner">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Jejak Kreativitas Bangsa</h1>
-            <p class="text-xl md:text-2xl font-light italic opacity-90 mb-8">
-                "Merawat ilmu, menebar inspirasi, menuai peradaban."
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#karya-siswa" class="bg-white text-navy px-8 py-3 rounded-full font-bold hover:bg-slate-100 transition shadow-lg">Lihat Karya Siswa</a>
-                <a href="#karya-guru" class="bg-green-custom border border-white text-white px-8 py-3 rounded-full font-bold hover:bg-green-800 transition">Inspirasi Guru</a>
-            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight">SD NEGERI WIKAU</h1>
+            <p class="text-lg md:text-2xl italic opacity-90 font-light">"Merawat ilmu, menebar inspirasi, menuai peradaban."</p>
+            <div class="mt-8 h-1 w-24 bg-green-400 mx-auto rounded-full"></div>
         </div>
     </header>
 
-    <!-- Ringkasan Statistik -->
-    <div class="max-w-7xl mx-auto px-4 -mt-12">
-        <div class="bg-white rounded-xl shadow-xl p-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center border-b-4 border-green-custom">
-            <div>
-                <p class="text-4xl font-bold text-navy">150+</p>
-                <p class="text-slate-500 font-medium">Karya Siswa</p>
-            </div>
-            <div>
-                <p class="text-4xl font-bold text-navy">12</p>
-                <p class="text-slate-500 font-medium">Praktik Baik Guru</p>
-            </div>
-            <div>
-                <p class="text-4xl font-bold text-navy">500+</p>
-                <p class="text-slate-500 font-medium">Inspirasi Ditebar</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bagian Galeri Karya Siswa -->
-    <section id="karya-siswa" class="py-20 max-w-7xl mx-auto px-4">
-        <div class="flex items-center justify-between mb-10">
-            <div>
-                <h2 class="text-3xl font-bold text-navy">Galeri Cakrawala</h2>
-                <p class="text-slate-600">Eksplorasi imajinasi tanpa batas siswa-siswi SDN Wikau.</p>
-            </div>
-            <a href="#" class="text-navy font-bold flex items-center space-x-1 hover:underline">
-                <span>Lihat Semua</span>
-                <i class="fas fa-arrow-right text-sm"></i>
-            </a>
+    <!-- Galeri Karya -->
+    <section id="galeri" class="py-12 max-w-7xl mx-auto px-4">
+        <h2 class="text-2xl font-bold text-navy mb-8 border-l-4 border-green-custom pl-4">Karya Terbaru Siswa</h2>
+        
+        <div id="loading" class="flex justify-center py-10">
+            <div class="loader"></div>
+            <span class="ml-3 text-slate-500">Memuat karya...</span>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white p-6 rounded-2xl border border-slate-100 card-hover shadow-sm">
-                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4">
-                    <i class="fas fa-book-open"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-2">Pustaka Cilik</h3>
-                <p class="text-slate-600 mb-4">Kumpulan puisi "Cita-citaku" dan cerpen persahabatan karya siswa.</p>
-                <div class="flex items-center text-xs text-slate-400">
-                    <i class="far fa-clock mr-1"></i> Baru saja diperbarui
-                </div>
-            </div>
+        <div id="karya-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
 
-            <div class="bg-white p-6 rounded-2xl border border-slate-100 card-hover shadow-sm">
-                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-4">
-                    <i class="fas fa-palette"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-2">Ruang Visual</h3>
-                <p class="text-slate-600 mb-4">Galeri lukisan cat air dan kreasi kerajinan tangan kreatif.</p>
-                <div class="flex items-center text-xs text-slate-400">
-                    <i class="far fa-clock mr-1"></i> Kemarin
-                </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl border border-slate-100 card-hover shadow-sm">
-                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 mb-4">
-                    <i class="fas fa-microphone-alt"></i>
-                </div>
-                <h3 class="text-xl font-bold mb-2">Gema Suara</h3>
-                <p class="text-slate-600 mb-4">Podcast dan rekaman pembacaan puisi anak SDN Wikau.</p>
-                <div class="flex items-center text-xs text-slate-400">
-                    <i class="far fa-clock mr-1"></i> 3 hari lalu
-                </div>
+    <!-- Form Input Karya -->
+    <section id="input-karya" class="py-12 bg-white border-t">
+        <div class="max-w-2xl mx-auto px-4">
+            <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h3 class="text-2xl font-bold text-navy mb-6 text-center">Tambah Karya Baru</h3>
+                <form id="formKarya" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Nama Siswa</label>
+                        <input type="text" id="nama" required class="w-full p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-navy outline-none" placeholder="Masukkan nama lengkap siswa">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1">Kelas</label>
+                            <input type="text" id="kelas" required class="w-full p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-navy outline-none" placeholder="Contoh: 6A">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1">Kategori</label>
+                            <select id="kategori" class="w-full p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-navy outline-none">
+                                <option value="Puisi">Puisi</option>
+                                <option value="Gambar">Gambar/Lukisan</option>
+                                <option value="Prakarya">Prakarya</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Judul Karya</label>
+                        <input type="text" id="judul" required class="w-full p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-navy outline-none" placeholder="Apa judul karyanya?">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Link Gambar (Google Drive)</label>
+                        <input type="url" id="linkGambar" placeholder="Tempel link foto di sini" class="w-full p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-navy outline-none">
+                    </div>
+                    <button type="submit" id="btnSubmit" class="w-full bg-navy text-white font-bold py-4 rounded-xl hover:bg-blue-900 transition flex justify-center items-center shadow-lg">
+                        <span id="btnText">Simpan Karya ke Portal</span>
+                        <div id="btnLoader" class="loader border-white border-t-navy w-5 h-5 ml-3 hidden"></div>
+                    </button>
+                </form>
             </div>
         </div>
     </section>
 
-    <!-- Bagian Karya Guru -->
-    <section id="karya-guru" class="py-20 bg-navy text-white">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-4">Mimbar Inspirasi</h2>
-            <p class="text-blue-100 mb-12">Dedikasi pendidik dalam merawat ilmu dan berbagi praktik baik.</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white/10 p-8 rounded-3xl border border-white/10 hover:bg-white/20 transition text-left">
-                    <h4 class="text-xl font-bold mb-2 text-green-400">Jurnal Pedagogi</h4>
-                    <p class="text-blue-50 sm">Strategi belajar aktif menggunakan media lingkungan sekitar Wikau.</p>
-                </div>
-                <div class="bg-white/10 p-8 rounded-3xl border border-white/10 hover:bg-white/20 transition text-left">
-                    <h4 class="text-xl font-bold mb-2 text-green-400">Modul Kreatif</h4>
-                    <p class="text-blue-50 sm">Panduan literasi digital dasar untuk guru sekolah dasar.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer / Kaki Halaman -->
-    <footer class="bg-slate-900 text-white py-12 px-4">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-6 md:mb-0">
-                <span class="font-bold text-xl tracking-tight text-green-400">SDN WIKAU</span>
-                <p class="text-slate-400 text-sm italic mt-2">"Merawat ilmu, menebar inspirasi, menuai peradaban."</p>
-            </div>
-            <div class="flex space-x-6">
-                <a href="#" class="hover:text-green-400"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="hover:text-green-400"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="hover:text-green-400"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
-        <div class="mt-8 text-center text-slate-500 text-xs pt-8 border-t border-slate-800">
-            &copy; 2024 SDN Wikau.
+    <footer class="bg-slate-900 text-white py-10 text-center text-sm">
+        <p class="font-bold mb-2 text-lg">SD NEGERI WIKAU</p>
+        <p class="opacity-75 italic">"Merawat Ilmu, Menebar Inspirasi, Menuai Peradaban."</p>
+        <div class="mt-6 border-t border-slate-800 pt-6">
+            &copy; 2024 SD NEGERI WIKAU. Semua Hak Dilindungi.
         </div>
     </footer>
 
+    <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzFn1nMv06O9tYOJAvrgf8EG8h8pMUOG0buqwaHo2AAdlX5Dc9FtrBPWtfOM_2dRWDqsQ/exec";
+
+        async function loadKarya() {
+            const container = document.getElementById('karya-container');
+            try {
+                const response = await fetch(WEB_APP_URL);
+                const data = await response.json();
+                
+                document.getElementById('loading').classList.add('hidden');
+                container.innerHTML = '';
+
+                if (data.length === 0) {
+                    container.innerHTML = '<p class="col-span-full text-center py-10 text-slate-400">Belum ada karya yang ditampilkan.</p>';
+                }
+
+                data.reverse().forEach(item => {
+                    const card = `
+                        <div class="bg-white rounded-2xl shadow-sm border p-4 hover:shadow-md transition duration-300">
+                            <div class="aspect-video bg-slate-100 rounded-lg mb-4 overflow-hidden">
+                                <img src="${item.link_gambar || 'https://via.placeholder.com/400x225?text=SDN+Wikau'}" 
+                                     class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x225?text=Karya+Siswa'">
+                            </div>
+                            <span class="text-[10px] font-bold uppercase bg-green-50 text-green-700 px-2 py-1 rounded-md border border-green-100">${item.kategori}</span>
+                            <h4 class="font-bold text-lg text-navy mt-2 leading-tight">${item.judul_karya}</h4>
+                            <p class="text-slate-500 text-sm mt-1">Oleh: ${item.nama} (Kelas ${item.kelas})</p>
+                        </div>
+                    `;
+                    container.innerHTML += card;
+                });
+            } catch (e) {
+                console.error(e);
+                document.getElementById('loading').innerHTML = "Gagal memuat data. Periksa koneksi atau URL API.";
+            }
+        }
+
+        document.getElementById('formKarya').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btnSubmit = document.getElementById('btnSubmit');
+            const btnText = document.getElementById('btnText');
+            const btnLoader = document.getElementById('btnLoader');
+
+            const payload = {
+                nama: document.getElementById('nama').value,
+                kelas: document.getElementById('kelas').value,
+                kategori: document.getElementById('kategori').value,
+                judul: document.getElementById('judul').value,
+                linkGambar: document.getElementById('linkGambar').value
+            };
+
+            btnSubmit.disabled = true;
+            btnText.innerText = "Sedang Mengirim...";
+            btnLoader.classList.remove('hidden');
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify(payload)
+                });
+
+                alert("Alhamdulillah! Karya berhasil ditambahkan ke SD NEGERI WIKAU.");
+                document.getElementById('formKarya').reset();
+                loadKarya();
+            } catch (error) {
+                alert("Terjadi kesalahan saat menyimpan data.");
+            } finally {
+                btnSubmit.disabled = false;
+                btnText.innerText = "Simpan Karya ke Portal";
+                btnLoader.classList.add('hidden');
+            }
+        });
+
+        window.onload = loadKarya;
+    </script>
 </body>
 </html>
