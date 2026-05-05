@@ -3,318 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Resmi SD NEGERI WIKAU</title>
+    <title>Portal Digital SDN Wikau</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy-primary: #1e3a8a;
-            --green-merawat: #166534;
+            --emerald: #059669;
+            --crystal: #f9fafb;
+            --soft-gray: #e5e7eb;
+            --glass-bg: rgba(255, 255, 255, 0.15);
         }
-        .bg-navy { background-color: var(--navy-primary); }
-        .text-navy { color: var(--navy-primary); }
-        .bg-green-custom { background-color: var(--green-merawat); }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            scroll-behavior: smooth;
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--crystal);
+            color: #1f2937;
+            overflow-x: hidden;
         }
-        .hero-gradient {
-            background: linear-gradient(rgba(30, 58, 138, 0.85), rgba(22, 101, 52, 0.85)), url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
+
+        h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .mesh-gradient {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(at 0% 0%, rgba(5, 150, 105, 0.15) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
+            z-index: -1;
         }
-        .nav-link.active {
-            color: var(--green-merawat);
-            font-weight: bold;
-            border-bottom: 2px solid var(--green-merawat);
+
+        .glass-nav {
+            background: rgba(249, 250, 251, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(5, 150, 105, 0.1);
         }
-        .page-content { display: none; }
-        .page-content.active { display: block; }
-        
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #1e3a8a;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
+
+        .bento-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .bento-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(5, 150, 105, 0.1);
+            border-color: var(--emerald);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--emerald);
+            border-radius: 10px;
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+
+        .shimmer-btn:hover::after { left: 100%; top: 100%; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="custom-scrollbar">
+    <div class="mesh-gradient"></div>
 
-    <!-- Navigasi -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center space-x-2 cursor-pointer" onclick="showPage('beranda')">
-                    <div class="bg-navy p-2 rounded-lg text-white">
-                        <i class="fas fa-graduation-cap text-xl"></i>
-                    </div>
-                    <span class="font-bold text-xl text-navy tracking-tight">SDN WIKAU</span>
-                </div>
-                <!-- Menu Desktop -->
-                <div class="hidden md:flex space-x-6 font-medium text-sm">
-                    <button onclick="showPage('beranda')" class="nav-link active py-2" id="nav-beranda">BERANDA</button>
-                    <button onclick="showPage('profil')" class="nav-link py-2" id="nav-profil">PROFIL</button>
-                    <button onclick="showPage('berita')" class="nav-link py-2" id="nav-berita">BERITA</button>
-                    <button onclick="showPage('karya')" class="nav-link py-2" id="nav-karya">HASIL KARYA</button>
-                    <button onclick="showPage('game')" class="nav-link py-2" id="nav-game">GAME INTERAKTIF</button>
-                </div>
-                <button class="md:hidden text-navy text-2xl" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars"></i>
-                </button>
+    <!-- Navbar -->
+    <nav class="glass-nav sticky top-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-extrabold text-emerald-700 tracking-tight">SDN WIKAU</h1>
+                <p class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold">Portal Digital Sekolah</p>
             </div>
-        </div>
-        <!-- Menu Mobile -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-4 space-y-3">
-            <button onclick="showPage('beranda')" class="block w-full text-left font-bold">BERANDA</button>
-            <button onclick="showPage('profil')" class="block w-full text-left font-bold">PROFIL</button>
-            <button onclick="showPage('berita')" class="block w-full text-left font-bold">BERITA</button>
-            <button onclick="showPage('karya')" class="block w-full text-left font-bold">HASIL KARYA</button>
-            <button onclick="showPage('game')" class="block w-full text-left font-bold">GAME INTERAKTIF</button>
+            <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-600">
+                <a href="#karya" class="hover:text-emerald-600 transition">Karya Siswa</a>
+                <a href="#berita" class="hover:text-emerald-600 transition">Warta Sekolah</a>
+                <a href="#profil" class="hover:text-emerald-600 transition">Profil Kami</a>
+            </div>
+            <button class="md:hidden text-emerald-700">☰</button>
         </div>
     </nav>
 
-    <!-- HALAMAN: BERANDA -->
-    <main id="page-beranda" class="page-content active">
-        <header class="hero-gradient text-white py-28 px-4 text-center">
-            <div class="max-w-4xl mx-auto">
-                <h1 class="text-5xl md:text-7xl font-extrabold mb-4">SD NEGERI WIKAU</h1>
-                <p class="text-lg md:text-2xl italic opacity-90 font-light">"Merawat ilmu, menebar inspirasi, menuai peradaban."</p>
-            </div>
-        </header>
+    <!-- Hero -->
+    <header class="max-w-7xl mx-auto px-6 pt-20 pb-12 text-center animate-fade-up">
+        <h2 class="text-5xl md:text-7xl font-extrabold mb-6 text-gray-900 leading-tight">
+            Merawat Ilmu, <span class="text-emerald-600 italic">Menebar Inspirasi.</span>
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-10">
+            Terwujudnya peserta didik yang berakhlak mulia, berpikir kritis, kreatif, dan peduli lingkungan.
+        </p>
         
-        <section class="py-16 max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8">
-            <div class="bg-white p-8 rounded-2xl shadow-sm border text-center cursor-pointer hover:border-green-500 transition" onclick="showPage('karya')">
-                <i class="fas fa-paint-brush text-4xl text-green-600 mb-4"></i>
-                <h3 class="font-bold text-xl mb-2">Eksplorasi Karya</h3>
-                <p class="text-slate-500">Lihat ribuan imajinasi siswa SDN Wikau.</p>
-            </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border text-center cursor-pointer hover:border-blue-500 transition" onclick="showPage('berita')">
-                <i class="fas fa-newspaper text-4xl text-blue-600 mb-4"></i>
-                <h3 class="font-bold text-xl mb-2">Warta Sekolah</h3>
-                <p class="text-slate-500">Kabar terbaru prestasi dan kegiatan sekolah.</p>
-            </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border text-center cursor-pointer hover:border-purple-500 transition" onclick="showPage('game')">
-                <i class="fas fa-gamepad text-4xl text-purple-600 mb-4"></i>
-                <h3 class="font-bold text-xl mb-2">Belajar Seru</h3>
-                <p class="text-slate-500">Game interaktif untuk asah ketangkasan.</p>
-            </div>
-        </section>
-    </main>
+        <!-- Search & Filter -->
+        <div class="flex flex-wrap justify-center gap-4 bg-white/50 p-4 rounded-3xl backdrop-blur-md border border-white max-w-3xl mx-auto shadow-sm">
+            <select id="filterKategori" onchange="fetchData()" class="bg-transparent font-semibold text-emerald-800 outline-none p-2 cursor-pointer">
+                <option value="Semua">Semua Kategori</option>
+                <option value="Game Interaktif">Game Interaktif</option>
+                <option value="Video Pembelajaran">Video</option>
+                <option value="Berita">Warta Berita</option>
+                <option value="Profil">Profil</option>
+            </select>
+            <select id="filterKelas" onchange="fetchData()" class="bg-transparent font-semibold text-emerald-800 outline-none p-2 cursor-pointer border-l border-emerald-100 pl-4">
+                <option value="Semua">Semua Kelas</option>
+                <option value="Kelas 1">Kelas 1</option>
+                <option value="Kelas 2">Kelas 2</option>
+                <option value="Kelas 3">Kelas 3</option>
+                <option value="Kelas 4">Kelas 4</option>
+                <option value="Kelas 5">Kelas 5</option>
+                <option value="Kelas 6">Kelas 6</option>
+            </select>
+        </div>
+    </header>
 
-    <!-- HALAMAN: PROFIL SEKOLAH -->
-    <main id="page-profil" class="page-content py-16">
-        <div class="max-w-4xl mx-auto px-4">
-            <h2 class="text-4xl font-bold text-navy mb-8 text-center">Profil SD NEGERI WIKAU</h2>
-            <div class="bg-white p-10 rounded-3xl shadow-sm border leading-relaxed">
-                <h3 class="text-2xl font-bold text-green-700 mb-4 underline">Visi</h3>
-                <p class="mb-6 italic text-lg text-slate-700">"TERWUJUDNYA PESERTA DIDIK YANG BERAKHLAK MULIA,BERPIKIR   KRITIS,
-		     KREATIF DAN PEDULI LINGKUNGAN"</p>
-                
-                <h3 class="text-xl font-bold text-navy mb-2">Misi</h3>
-                <p class="text-slate-600 mb-6">1.Menanamkan nilai-nilai akhlak mulia melalui pembiasaan sikap jujur, tanggung jawab, disiplin, dan saling menghargai dalam kehidupan sehari-hari di sekolah dan masyarakat.
-2.Mendorong kemampuan bernalar kritis peserta didik dengan pembelajaran yang aktif, reflektif, dan berbasis pemecahan masalah nyata.
-3.Mengembangkan kreativitas peserta didik melalui kegiatan inovatif di bidang akademik maupun non-akademik yang mendukung potensi dan minat bakat.
-4.Mewujudkan budaya peduli lingkungan dengan integrasi pendidikan lingkungan hidup dalam kurikulum dan kegiatan nyata seperti daur ulang, pengelolaan sampah, serta penghijauan sekolah.
-5.Membangun ekosistem sekolah yang inklusif dan berkelanjutan sebagai tempat belajar yang aman, nyaman, dan ramah lingkungan.
-.</p>
-                
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="bg-slate-50 p-4 rounded-xl">
-                        <h4 class="font-bold text-navy"><i class="fas fa-users mr-2"></i> Tenaga Pengajar</h4>
-                        <p class="text-sm text-slate-500">Didukung oleh guru-guru profesional yang inspiratif.</p>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-xl">
-                        <h4 class="font-bold text-navy"><i class="fas fa-star mr-2"></i> Akreditasi</h4>
-                        <p class="text-sm text-slate-500">Terakreditasi dengan predikat yang membanggakan.</p>
-                    </div>
-                </div>
-            </div>
+    <!-- Bento Grid -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div id="gridKarya" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Data akan dimuat di sini -->
         </div>
     </main>
 
-    <!-- HALAMAN: BERITA -->
-    <main id="page-berita" class="page-content py-16">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-navy mb-10">Kabar Terbaru</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Contoh Berita Statis -->
-                <div class="flex flex-col md:flex-row bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-100">
-                    <div class="md:w-1/3 bg-slate-200">
-                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80" class="h-full w-full object-cover">
-                    </div>
-                    <div class="p-6 md:w-2/3">
-                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">KEGIATAN</span>
-                        <h3 class="text-xl font-bold text-navy mt-2">Festival Literasi SDN Wikau 2024</h3>
-                        <p class="text-slate-500 text-sm mt-2">Siswa-siswi antusias mengikuti lomba mendongeng dan baca puisi tingkat kabupaten...</p>
-                        <button class="mt-4 text-navy font-bold text-sm">Baca Selengkapnya <i class="fas fa-arrow-right"></i></button>
-                    </div>
-                </div>
+    <!-- Footer -->
+    <footer class="mt-20 border-t border-emerald-100 py-12 px-6 bg-white/30 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <p class="text-sm text-gray-500 font-medium">© 2024 | SDN WIKAU oleh Bapak Ranto</p>
+                <p class="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">Support by <a href="https://mfytech.my.id/" class="hover:text-emerald-500">MfyTech</a></p>
+            </div>
+            <div class="flex gap-6">
+                <!-- Sosial Media Ikon Sederhana -->
+                <a href="#" class="text-gray-400 hover:text-blue-600 transition font-bold">FB</a>
+                <a href="#" class="text-gray-400 hover:text-pink-600 transition font-bold">IG</a>
+                <a href="#" class="text-gray-400 hover:text-black transition font-bold">TK</a>
+                <a href="#" class="text-gray-400 hover:text-red-600 transition font-bold">YT</a>
             </div>
         </div>
-    </main>
-
-    <!-- HALAMAN: HASIL KARYA -->
-    <main id="page-karya" class="page-content py-16">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
-                <div>
-                    <h2 class="text-3xl font-bold text-navy leading-tight">Galeri Cakrawala</h2>
-                    <p class="text-slate-500">Kumpulan karya terbaik siswa SDN Wikau.</p>
-                </div>
-                <button onclick="scrollToForm()" class="bg-green-custom text-white px-6 py-2 rounded-full font-bold shadow-md hover:scale-105 transition">Upload Karya Baru</button>
-            </div>
-            
-            <div id="loading-karya" class="flex justify-center py-20">
-                <div class="loader"></div>
-            </div>
-            <div id="karya-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-            <!-- Form di bagian bawah galeri -->
-            <div id="form-section" class="mt-20 max-w-2xl mx-auto bg-white p-8 rounded-3xl border shadow-lg">
-                <h3 class="text-2xl font-bold text-navy mb-6 text-center">Tambah Karya</h3>
-                <form id="formKarya" class="space-y-4">
-                    <input type="text" id="nama" required class="w-full p-3 rounded-xl border outline-none" placeholder="Nama Siswa">
-                    <input type="text" id="kelas" required class="w-full p-3 rounded-xl border outline-none" placeholder="Kelas (Contoh: 6A)">
-                    <select id="kategori" class="w-full p-3 rounded-xl border outline-none">
-                        <option value="Puisi">Puisi</option>
-                        <option value="Gambar">Gambar/Lukisan</option>
-                        <option value="Prakarya">Prakarya</option>
-                    </select>
-                    <input type="text" id="judul" required class="w-full p-3 rounded-xl border outline-none" placeholder="Judul Karya">
-                    <input type="url" id="linkGambar" class="w-full p-3 rounded-xl border outline-none" placeholder="Link Gambar (Google Drive)">
-                    <button type="submit" id="btnSubmit" class="w-full bg-navy text-white font-bold py-4 rounded-xl hover:bg-blue-900 transition flex justify-center items-center">
-                        <span id="btnText">Simpan Karya</span>
-                        <div id="btnLoader" class="loader border-white border-t-navy w-5 h-5 ml-3 hidden"></div>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </main>
-
-    <!-- HALAMAN: GAME INTERAKTIF -->
-    <main id="page-game" class="page-content py-16">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold text-navy mb-4">Ruang Bermain & Belajar</h2>
-            <p class="text-slate-500 mb-12">Game sederhana untuk melatih konsentrasi siswa.</p>
-            
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="bg-white p-10 rounded-3xl shadow-sm border border-purple-100">
-                    <div class="w-20 h-20 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl italic font-bold">1+1</div>
-                    <h3 class="font-bold text-xl mb-2">Tantangan Matematika</h3>
-                    <p class="text-sm text-slate-500 mb-6">Tes kecepatan berhitung dalam 30 detik.</p>
-                    <button class="bg-purple-600 text-white px-8 py-2 rounded-full font-bold opacity-50 cursor-not-allowed">Segera Hadir</button>
-                </div>
-                <div class="bg-white p-10 rounded-3xl shadow-sm border border-green-100">
-                    <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl font-bold italic">Abc</div>
-                    <h3 class="font-bold text-xl mb-2">Susun Kata</h3>
-                    <p class="text-sm text-slate-500 mb-6">Menyusun huruf menjadi kata yang bermakna.</p>
-                    <button class="bg-green-600 text-white px-8 py-2 rounded-full font-bold opacity-50 cursor-not-allowed">Segera Hadir</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer class="bg-slate-900 text-white py-12 text-center">
-        <p class="font-bold text-lg mb-2">SD NEGERI WIKAU</p>
-        <p class="text-slate-500 text-xs italic">"Merawat Ilmu, Menebar Inspirasi, Menuai Peradaban."</p>
     </footer>
 
     <script>
-        // MASUKKAN URL APPS SCRIPT BAPAK DI SINI
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxztX14KPIqvyGcrAgln5NR3F9ns6B31nk12tWOS6GRmmEsmWU8FDPPExLGZSYALA24Ag/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbywhLrRLRFwMSa6F4TEYohkLc4Iac5_HC_C0LZB6wO-aA6tb8lVkH53qbeH6utM98VB-Q/exec"; // MASUKKAN URL WEB APP ANDA DI SINI
+        const API_TOKEN = "WIKAU_SAKTI_2024";
 
-        function showPage(pageId) {
-            // Sembunyikan semua halaman
-            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        async function fetchData() {
+            const kat = document.getElementById('filterKategori').value;
+            const kls = document.getElementById('filterKelas').value;
+            const grid = document.getElementById('gridKarya');
             
-            // Tampilkan halaman yang dipilih
-            document.getElementById('page-' + pageId).classList.add('active');
-            document.getElementById('nav-' + pageId).classList.add('active');
-            
-            // Tutup menu mobile jika terbuka
-            document.getElementById('mobile-menu').classList.add('hidden');
-            
-            // Scroll ke atas
-            window.scrollTo(0, 0);
+            grid.innerHTML = '<div class="col-span-full py-20 text-center text-emerald-600 font-bold animate-pulse">Menghimpun inspirasi...</div>';
 
-            // Jika ke halaman karya, load datanya
-            if(pageId === 'karya') loadKarya();
-        }
-
-        function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        }
-
-        function scrollToForm() {
-            document.getElementById('form-section').scrollIntoView({behavior: 'smooth'});
-        }
-
-        async function loadKarya() {
-            const container = document.getElementById('karya-container');
-            const loading = document.getElementById('loading-karya');
             try {
-                const response = await fetch(WEB_APP_URL);
+                let url = `${API_URL}?token=${API_TOKEN}&kategori=${kat}&kelas=${kls}`;
+                const response = await fetch(url, { redirect: 'follow' });
                 const data = await response.json();
-                
-                loading.classList.add('hidden');
-                container.innerHTML = '';
-
-                data.reverse().forEach(item => {
-                    container.innerHTML += `
-                        <div class="bg-white rounded-2xl shadow-sm border p-4 hover:shadow-md transition">
-                            <div class="aspect-video bg-slate-100 rounded-lg mb-4 overflow-hidden">
-                                <img src="${item.link_gambar || 'https://via.placeholder.com/400x225?text=SDN+Wikau'}" 
-                                     class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400x225?text=Karya+Siswa'">
-                            </div>
-                            <span class="text-[10px] font-bold uppercase bg-green-50 text-green-700 px-2 py-1 rounded-md border">${item.kategori}</span>
-                            <h4 class="font-bold text-lg text-navy mt-2">${item.judul_karya}</h4>
-                            <p class="text-slate-500 text-sm">Oleh: ${item.nama} (Kelas ${item.kelas})</p>
-                        </div>
-                    `;
-                });
-            } catch (e) {
-                loading.innerHTML = "Gagal memuat karya.";
+                renderCards(data);
+            } catch (err) {
+                console.error("Gagal memuat API, menggunakan data cadangan.");
+                renderCards(dummyData);
             }
         }
 
-        document.getElementById('formKarya').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btnSubmit = document.getElementById('btnSubmit');
-            const btnLoader = document.getElementById('btnLoader');
-            
-            btnSubmit.disabled = true;
-            btnLoader.classList.remove('hidden');
+        function renderCards(data) {
+            const grid = document.getElementById('gridKarya');
+            grid.innerHTML = '';
 
-            const payload = {
-                nama: document.getElementById('nama').value,
-                kelas: document.getElementById('kelas').value,
-                kategori: document.getElementById('kategori').value,
-                judul: document.getElementById('judul').value,
-                linkGambar: document.getElementById('linkGambar').value
-            };
-
-            try {
-                await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify(payload)
-                });
-                alert("Karya berhasil terupload!");
-                document.getElementById('formKarya').reset();
-                loadKarya();
-            } catch (error) {
-                alert("Gagal mengupload.");
-            } finally {
-                btnSubmit.disabled = false;
-                btnLoader.classList.add('hidden');
+            if (data.length === 0) {
+                grid.innerHTML = '<div class="col-span-full py-20 text-center text-gray-400 font-medium italic">Oops! Belum ada karya di sini, ayo mulai berkarya!</div>';
+                return;
             }
-        });
+
+            data.forEach((item, index) => {
+                // Memberikan efek Bento Grid (variasi ukuran)
+                const isFeatured = index % 5 === 0;
+                const card = document.createElement('div');
+                card.className = `bento-card group animate-fade-up ${isFeatured ? 'md:col-span-2 md:row-span-2' : ''}`;
+                card.style.animationDelay = `${index * 0.1}s`;
+
+                card.innerHTML = `
+                    <div class="relative h-48 md:h-full min-h-[200px] overflow-hidden">
+                        <img src="${item.Link_Thumbnail}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="${item.Judul_Karya}">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur-md text-[10px] font-bold text-white uppercase rounded-full border border-white/30">${item.Kategori}</span>
+                        </div>
+                    </div>
+                    <div class="p-6 relative bg-white/40">
+                        <p class="text-[10px] text-emerald-600 font-extrabold uppercase tracking-widest mb-1">${item.Mata_Pelajaran} • ${item.Kelas}</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2 leading-tight">${item.Judul_Karya}</h3>
+                        <p class="text-sm text-gray-600 mb-6 line-clamp-2">${item.Deskripsi}</p>
+                        <a href="${item.Link_Media}" target="_blank" class="shimmer-btn inline-block w-full py-3 bg-emerald-600 text-white text-center rounded-xl font-bold hover:bg-emerald-700 transition-colors">Akses Sekarang</a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        const dummyData = [
+            { Judul_Karya: "Inovasi Daur Ulang", Kategori: "Video Pembelajaran", Mata_Pelajaran: "IPA", Kelas: "Kelas 4, 5", Link_Thumbnail: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=800", Deskripsi: "Siswa kelas 5 mendemonstrasikan cara mengubah sampah plastik menjadi pot bunga cantik.", Link_Media: "#" },
+            { Judul_Karya: "Kuis Pancasila", Kategori: "Game Interaktif", Mata_Pelajaran: "PPKN", Kelas: "Kelas 3", Link_Thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800", Deskripsi: "Asah kemampuanmu tentang nilai-nilai luhur Pancasila dengan permainan seru ini.", Link_Media: "#" },
+            { Judul_Karya: "Galeri Lukis Alam", Kategori: "Karya Seni", Mata_Pelajaran: "SBdP", Kelas: "Semua Kelas", Link_Thumbnail: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=800", Deskripsi: "Kumpulan lukisan bertema lingkungan karya siswa SDN Wikau.", Link_Media: "#" }
+        ];
+
+        window.onload = fetchData;
+
+        // Anti-Inspect Simple
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        console.log("%cHalo Pak Ranto! %cPortal SDN Wikau terjaga dengan aman.", "color: #059669; font-size: 20px; font-weight: bold;", "color: #gray;");
     </script>
 </body>
 </html>
