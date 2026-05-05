@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Digital SDN Wikau</title>
+    <title>Portal Digital SD NEGERI WIKAU</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
     <style>
@@ -69,6 +69,24 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        .nav-pill {
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-pill:hover {
+            background-color: white;
+            border-color: var(--emerald);
+            color: var(--emerald);
+            transform: translateY(-2px);
+        }
+
+        .nav-pill.active {
+            background-color: var(--emerald);
+            color: white;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+        }
+
         .shimmer-btn {
             position: relative;
             overflow: hidden;
@@ -89,144 +107,247 @@
 <body class="custom-scrollbar">
     <div class="mesh-gradient"></div>
 
-    <!-- Navbar -->
+    <!-- Navigasi Utama -->
     <nav class="glass-nav sticky top-0 z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div>
-                <h1 class="text-2xl font-extrabold text-emerald-700 tracking-tight">SDN WIKAU</h1>
-                <p class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold">Portal Digital Sekolah</p>
+                <h1 class="text-2xl font-extrabold text-emerald-700 tracking-tight">SD NEGERI WIKAU</h1>
+                <p class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold">Portal Digital Resmi Sekolah</p>
             </div>
             <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-600">
-                <a href="#karya" class="hover:text-emerald-600 transition">Karya Siswa</a>
-                <a href="#berita" class="hover:text-emerald-600 transition">Warta Sekolah</a>
-                <a href="#profil" class="hover:text-emerald-600 transition">Profil Kami</a>
+                <a href="#" onclick="location.reload()" class="hover:text-emerald-600 transition">Beranda</a>
+                <a href="#gridKarya" class="hover:text-emerald-600 transition">Karya Siswa</a>
+                <a href="#" onclick="setMenuFilter('Profil', document.getElementById('btnProfil'))" class="hover:text-emerald-600 transition">Profil</a>
             </div>
-            <button class="md:hidden text-emerald-700">☰</button>
+            <button class="md:hidden text-emerald-700 text-2xl" onclick="fetchData()">↻</button>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <header class="max-w-7xl mx-auto px-6 pt-20 pb-12 text-center animate-fade-up">
-        <h2 class="text-5xl md:text-7xl font-extrabold mb-6 text-gray-900 leading-tight">
+    <!-- Bagian Hero -->
+    <header id="heroSection" class="max-w-7xl mx-auto px-6 pt-16 pb-8 text-center animate-fade-up">
+        <h2 class="text-5xl md:text-6xl font-extrabold mb-6 text-gray-900 leading-tight">
             Merawat Ilmu, <span class="text-emerald-600 italic">Menebar Inspirasi.</span>
         </h2>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-10">
-            Terwujudnya peserta didik yang berakhlak mulia, berpikir kritis, kreatif, dan peduli lingkungan.
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+            Selamat datang di ekosistem digital SD NEGERI WIKAU. Wadah kreativitas, kolaborasi, dan publikasi prestasi seluruh warga sekolah.
         </p>
-        
-        <!-- Search & Filter -->
-        <div class="flex flex-wrap justify-center gap-4 bg-white/50 p-4 rounded-3xl backdrop-blur-md border border-white max-w-3xl mx-auto shadow-sm">
-            <select id="filterKategori" onchange="fetchData()" class="bg-transparent font-semibold text-emerald-800 outline-none p-2 cursor-pointer">
-                <option value="Semua">Semua Kategori</option>
-                <option value="Game Interaktif">Game Interaktif</option>
-                <option value="Video Pembelajaran">Video</option>
-                <option value="Berita">Warta Berita</option>
-                <option value="Profil">Profil</option>
-            </select>
-            <select id="filterKelas" onchange="fetchData()" class="bg-transparent font-semibold text-emerald-800 outline-none p-2 cursor-pointer border-l border-emerald-100 pl-4">
-                <option value="Semua">Semua Kelas</option>
-                <option value="Kelas 1">Kelas 1</option>
-                <option value="Kelas 2">Kelas 2</option>
-                <option value="Kelas 3">Kelas 3</option>
-                <option value="Kelas 4">Kelas 4</option>
-                <option value="Kelas 5">Kelas 5</option>
-                <option value="Kelas 6">Kelas 6</option>
-            </select>
-        </div>
     </header>
 
-    <!-- Bento Grid -->
-    <main class="max-w-7xl mx-auto px-6 py-12">
-        <div id="gridKarya" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Data akan dimuat di sini -->
+    <!-- Menu Navigasi Sekunder -->
+    <section class="max-w-7xl mx-auto px-6 mb-12 animate-fade-up" style="animation-delay: 0.2s;">
+        <div class="flex flex-wrap justify-center gap-3 md:gap-6 bg-white/40 p-3 rounded-[32px] backdrop-blur-md border border-white/60 shadow-sm">
+            <button onclick="setMenuFilter('Semua', this)" class="nav-pill active px-6 py-3 rounded-full text-sm font-bold flex items-center gap-2">
+                🏠 Beranda
+            </button>
+            <button id="btnProfil" onclick="setMenuFilter('Profil', this)" class="nav-pill bg-white/50 px-6 py-3 rounded-full text-sm font-bold text-gray-700 flex items-center gap-2">
+                👤 Profil
+            </button>
+            <button onclick="setMenuFilter('Berita', this)" class="nav-pill bg-white/50 px-6 py-3 rounded-full text-sm font-bold text-gray-700 flex items-center gap-2">
+                📰 Artikel
+            </button>
+            <button onclick="setMenuFilter('Seni', this)" class="nav-pill bg-white/50 px-6 py-3 rounded-full text-sm font-bold text-gray-700 flex items-center gap-2">
+                🎨 Hasil Karya
+            </button>
+            <button onclick="setMenuFilter('Game Interaktif', this)" class="nav-pill bg-white/50 px-6 py-3 rounded-full text-sm font-bold text-gray-700 flex items-center gap-2">
+                🎮 Game Interaktif
+            </button>
+        </div>
+
+        <!-- Filter Kelas -->
+        <div id="filterKelasContainer" class="mt-6 flex justify-center">
+            <div class="bg-emerald-50/50 px-4 py-2 rounded-2xl border border-emerald-100 flex items-center gap-3">
+                <span class="text-xs font-bold text-emerald-700 uppercase tracking-widest">Filter Kelas:</span>
+                <select id="filterKelas" onchange="fetchData()" class="bg-transparent text-sm font-bold text-emerald-800 outline-none cursor-pointer">
+                    <option value="Semua">Semua Kelas</option>
+                    <option value="Kelas 1">Kelas 1</option>
+                    <option value="Kelas 2">Kelas 2</option>
+                    <option value="Kelas 3">Kelas 3</option>
+                    <option value="Kelas 4">Kelas 4</option>
+                    <option value="Kelas 5">Kelas 5</option>
+                    <option value="Kelas 6">Kelas 6</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Grid -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+        <div id="gridKarya" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-max">
+            <!-- Data Cards -->
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="mt-20 border-t border-emerald-100 py-12 px-6 bg-white/30 backdrop-blur-md">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="text-center md:text-left">
-                <p class="text-sm text-gray-500 font-medium">© 2024 | SDN WIKAU oleh Bapak Ranto</p>
-                <p class="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">Support by <a href="https://mfytech.my.id/" class="hover:text-emerald-500">MfyTech</a></p>
-            </div>
-            <div class="flex gap-6">
-                <!-- Sosial Media Ikon Sederhana -->
-                <a href="#" class="text-gray-400 hover:text-blue-600 transition font-bold">FB</a>
-                <a href="#" class="text-gray-400 hover:text-pink-600 transition font-bold">IG</a>
-                <a href="#" class="text-gray-400 hover:text-black transition font-bold">TK</a>
-                <a href="#" class="text-gray-400 hover:text-red-600 transition font-bold">YT</a>
+                <p class="text-sm text-gray-500 font-medium">© 2024 | SD NEGERI WIKAU - Dibawah bimbingan Bapak Ranto</p>
+                <p class="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">Dukungan Teknologi oleh <a href="https://mfytech.my.id/" class="hover:text-emerald-500">MfyTech</a></p>
             </div>
         </div>
     </footer>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbxuvbJHIS5CkXwWRupMc_StuDjExhwjUZgruMoQkWnccy3RM8290WGf7dBW4BPOJNi8jg/exec"; // MASUKKAN URL WEB APP ANDA DI SINI
+        const API_URL = "https://script.google.com/macros/s/AKfycbxztX14KPIqvyGcrAgln5NR3F9ns6B31nk12tWOS6GRmmEsmWU8FDPPExLGZSYALA24Ag/exec"; 
         const API_TOKEN = "WIKAU_SAKTI_2024";
+        const DEFAULT_SHEET = "HasilKarya"; 
+
+        let currentCategory = "Semua";
+
+        function setMenuFilter(category, element) {
+            currentCategory = category;
+            
+            // UI Toggle
+            document.querySelectorAll('.nav-pill').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('bg-white/50');
+            });
+            if(element) {
+                element.classList.add('active');
+                element.classList.remove('bg-white/50');
+            }
+
+            // Sembunyikan/Tampilkan Filter Kelas & Hero
+            const filterKelas = document.getElementById('filterKelasContainer');
+            const hero = document.getElementById('heroSection');
+            
+            if (category === 'Profil') {
+                filterKelas.classList.add('hidden');
+                hero.classList.add('hidden');
+            } else {
+                filterKelas.classList.remove('hidden');
+                hero.classList.remove('hidden');
+            }
+
+            fetchData();
+        }
 
         async function fetchData() {
-            const kat = document.getElementById('filterKategori').value;
             const kls = document.getElementById('filterKelas').value;
             const grid = document.getElementById('gridKarya');
             
-            grid.innerHTML = '<div class="col-span-full py-20 text-center text-emerald-600 font-bold animate-pulse">Menghimpun inspirasi...</div>';
+            const targetSheet = (currentCategory === "Profil") ? "Profil" : DEFAULT_SHEET;
+
+            grid.innerHTML = `
+                <div class="col-span-full py-20 text-center">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-emerald-600 mb-4"></div>
+                    <p class="text-emerald-600 font-bold tracking-wide">Memuat data ${currentCategory}...</p>
+                </div>
+            `;
 
             try {
-                let url = `${API_URL}?token=${API_TOKEN}&kategori=${kat}&kelas=${kls}`;
-                const response = await fetch(url, { redirect: 'follow' });
-                const data = await response.json();
-                renderCards(data);
+                const params = new URLSearchParams({
+                    token: API_TOKEN,
+                    kategori: currentCategory,
+                    kelas: kls,
+                    sheet: targetSheet,
+                    action: "read"
+                });
+                
+                const response = await fetch(`${API_URL}?${params.toString()}`, {
+                    method: 'GET',
+                    mode: 'cors',
+                    redirect: 'follow'
+                });
+                const rawData = await response.json();
+
+                if (rawData.error) throw new Error(rawData.error);
+
+                let actualData = Array.isArray(rawData) ? rawData : (rawData.data || rawData.records || []);
+                
+                if (currentCategory === "Profil") {
+                    renderProfile(actualData);
+                } else {
+                    renderCards(actualData);
+                }
             } catch (err) {
-                console.error("Gagal memuat API, menggunakan data cadangan.");
-                renderCards(dummyData);
+                grid.innerHTML = `
+                    <div class="col-span-full py-10 px-6 text-center bg-red-50 rounded-2xl border border-red-100 border-dashed">
+                        <p class="text-red-700 font-bold mb-2">Sinkronisasi Gagal</p>
+                        <p class="text-sm text-red-600 mb-6">${err.message}</p>
+                        <p class="text-[10px] text-gray-400 mb-4 italic">Saran: Pastikan Bapak sudah membuat tab bernama "${targetSheet}" di Google Sheets.</p>
+                        <button onclick="fetchData()" class="text-xs bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold">Coba Lagi</button>
+                    </div>
+                `;
             }
         }
 
-        function renderCards(data) {
+        function renderProfile(data) {
             const grid = document.getElementById('gridKarya');
             grid.innerHTML = '';
+            
+            grid.className = "flex flex-col gap-12 max-w-4xl mx-auto";
 
             if (data.length === 0) {
-                grid.innerHTML = '<div class="col-span-full py-20 text-center text-gray-400 font-medium italic">Oops! Belum ada karya di sini, ayo mulai berkarya!</div>';
+                grid.innerHTML = '<div class="py-20 text-center text-gray-400 font-medium italic">Informasi profil belum diisi di tab "Profil".</div>';
                 return;
             }
 
             data.forEach((item, index) => {
-                // Memberikan efek Bento Grid (variasi ukuran)
+                const judul = item.judul || item["Judul"] || "Tentang Kami";
+                const konten = item.konten || item["Konten"] || "";
+                const thumb = item.link_gambar || item["Link Gambar"] || "";
+
+                const section = document.createElement('article');
+                section.className = "bg-white/60 p-8 rounded-[32px] border border-white shadow-sm animate-fade-up";
+                section.style.animationDelay = `${index * 0.1}s`;
+
+                section.innerHTML = `
+                    <div class="flex flex-col md:flex-row gap-8 items-start">
+                        ${thumb ? `<img src="${thumb}" class="w-full md:w-64 h-64 object-cover rounded-2xl shadow-lg mt-2" alt="${judul}">` : ''}
+                        <div class="flex-1 text-left">
+                            <h2 class="text-3xl font-extrabold text-emerald-700 mb-4">${judul}</h2>
+                            <!-- text-justify digunakan di bawah ini -->
+                            <div class="text-gray-600 leading-relaxed text-lg whitespace-pre-wrap text-justify">${konten}</div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(section);
+            });
+        }
+
+        function renderCards(data) {
+            const grid = document.getElementById('gridKarya');
+            grid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-max";
+            grid.innerHTML = '';
+
+            if (data.length === 0) {
+                grid.innerHTML = '<div class="col-span-full py-20 text-center text-gray-400 font-medium italic">Data tidak ditemukan.</div>';
+                return;
+            }
+
+            data.forEach((item, index) => {
                 const isFeatured = index % 5 === 0;
                 const card = document.createElement('div');
                 card.className = `bento-card group animate-fade-up ${isFeatured ? 'md:col-span-2 md:row-span-2' : ''}`;
-                card.style.animationDelay = `${index * 0.1}s`;
+                card.style.animationDelay = `${index * 0.05}s`;
+
+                const judul = item.judul_karya || item.judul || item["Judul Karya"] || "Karya SDN WIKAU";
+                const kategori = item.kategori || "Umum";
+                const kelas = item.kelas || "Umum";
+                const thumb = item.link_thumbnail || item.link_gambar || item["Link Gambar"] || "https://images.unsplash.com/photo-1577891742202-30d143093c83?q=80&w=800";
+                const link = item.link_media || item.link_gambar || "#";
 
                 card.innerHTML = `
-                    <div class="relative h-48 md:h-full min-h-[200px] overflow-hidden">
-                        <img src="${item.Link_Thumbnail}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="${item.Judul_Karya}">
-                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/80 via-transparent to-transparent"></div>
-                        <div class="absolute top-4 left-4 flex gap-2">
-                            <span class="px-3 py-1 bg-white/20 backdrop-blur-md text-[10px] font-bold text-white uppercase rounded-full border border-white/30">${item.Kategori}</span>
+                    <div class="relative ${isFeatured ? 'h-64 md:h-96' : 'h-48'} overflow-hidden">
+                        <img src="${thumb}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="${judul}">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 bg-white/20 backdrop-blur-md text-[10px] font-bold text-white uppercase rounded-full border border-white/30 tracking-widest">
+                                ${kategori}
+                            </span>
                         </div>
                     </div>
                     <div class="p-6 relative bg-white/40">
-                        <p class="text-[10px] text-emerald-600 font-extrabold uppercase tracking-widest mb-1">${item.Mata_Pelajaran} • ${item.Kelas}</p>
-                        <h3 class="text-xl font-bold text-gray-800 mb-2 leading-tight">${item.Judul_Karya}</h3>
-                        <p class="text-sm text-gray-600 mb-6 line-clamp-2">${item.Deskripsi}</p>
-                        <a href="${item.Link_Media}" target="_blank" class="shimmer-btn inline-block w-full py-3 bg-emerald-600 text-white text-center rounded-xl font-bold hover:bg-emerald-700 transition-colors">Akses Sekarang</a>
+                        <p class="text-[10px] text-emerald-600 font-extrabold uppercase tracking-widest mb-1">${kelas}</p>
+                        <h3 class="${isFeatured ? 'text-2xl' : 'text-lg'} font-bold text-gray-800 mb-2 leading-tight">${judul}</h3>
+                        <a href="${link}" target="_blank" class="shimmer-btn inline-block w-full py-3 bg-emerald-600 text-white text-center rounded-xl font-bold text-sm shadow-md">LIHAT DETAIL</a>
                     </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        const dummyData = [
-            { Judul_Karya: "Inovasi Daur Ulang", Kategori: "Video Pembelajaran", Mata_Pelajaran: "IPA", Kelas: "Kelas 4, 5", Link_Thumbnail: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=800", Deskripsi: "Siswa kelas 5 mendemonstrasikan cara mengubah sampah plastik menjadi pot bunga cantik.", Link_Media: "#" },
-            { Judul_Karya: "Kuis Pancasila", Kategori: "Game Interaktif", Mata_Pelajaran: "PPKN", Kelas: "Kelas 3", Link_Thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800", Deskripsi: "Asah kemampuanmu tentang nilai-nilai luhur Pancasila dengan permainan seru ini.", Link_Media: "#" },
-            { Judul_Karya: "Galeri Lukis Alam", Kategori: "Karya Seni", Mata_Pelajaran: "SBdP", Kelas: "Semua Kelas", Link_Thumbnail: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=800", Deskripsi: "Kumpulan lukisan bertema lingkungan karya siswa SDN Wikau.", Link_Media: "#" }
-        ];
-
         window.onload = fetchData;
-
-        // Anti-Inspect Simple
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        console.log("%cHalo Pak Ranto! %cPortal SDN Wikau terjaga dengan aman.", "color: #059669; font-size: 20px; font-weight: bold;", "color: #gray;");
     </script>
 </body>
 </html>
